@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>客观规律与主观能动性 辩证统一｜马原交互演示</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft YaHei",sans-serif}
+        body{background:#f5f7fa;color:#2c3e50;padding:20px;line-height:1.7}
+        .container{max-width:1000px;margin:0 auto;background:#fff;border-radius:16px;padding:30px;box-shadow:0 4px 16px rgba(0,0,0,0.08)}
+        h1{text-align:center;color:#2962ff;margin-bottom:10px;font-size:26px}
+        .subtitle{text-align:center;color:#666;margin-bottom:30px}
+        .section{margin:28px 0;border-bottom:1px solid #eee;padding-bottom:24px}
+        h2{color:#3949ab;margin-bottom:16px;font-size:20px}
+        .card{background:#f0f6ff;padding:20px;border-radius:12px;margin:16px 0}
+        .case-buttons{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0}
+        .case-btn{padding:10px 18px;border:none;border-radius:8px;background:#5c6bc0;color:#fff;cursor:pointer;transition:0.3s;font-size:15px}
+        .case-btn.active{background:#2962ff}
+        .case-content{padding:16px;background:#fff;border-radius:10px;margin-top:12px;min-height:140px}
+        .slider-wrap{margin:20px 0}
+        .slider-item{margin:18px 0}
+        .slider-item label{display:block;margin-bottom:6px;font-weight:bold}
+        input[type="range"]{width:100%;height:8px}
+        .result-box{padding:16px;border-radius:10px;font-weight:bold;font-size:18px;text-align:center;margin-top:12px}
+        .bad{background:#ffebee;color:#c62828}
+        .normal{background:#fff8e1;color:#f57c00}
+        .good{background:#e8f5e9;color:#2e7d32}
+        .quiz{margin-top:16px}
+        .opt{display:block;padding:10px;margin:8px 0;border:1px solid #ddd;border-radius:8px;cursor:pointer;transition:0.2s}
+        .opt:hover{border-color:#2962ff;background:#f3f6ff}
+        .answer-text{margin-top:12px;padding:12px;background:#eef2ff;border-radius:8px;display:none}
+        .misconception{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
+        .mis-card{padding:18px;background:#fafafa;border-radius:10px;border-left:4px solid #ff5722}
+        .btn{padding:9px 16px;border:none;border-radius:8px;background:#3949ab;color:#fff;cursor:pointer;margin:8px 0}
+        .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;padding:20px}
+        .modal-inner{background:#fff;padding:24px;border-radius:14px;max-width:700px;max-height:80vh;overflow:auto}
+        .close-modal{float:right;border:none;background:#ddd;padding:6px 12px;border-radius:6px;cursor:pointer}
+        textarea{width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;margin:10px 0;min-height:80px}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>客观规律与主观能动性的辩证统一</h1>
+        <div class="subtitle">交互式学习演示｜马克思主义哲学</div>
+
+        <div class="section">
+            <h2>理论理解（个人解读）</h2>
+            <div class="card">
+                <p><strong>客观规律：</strong>客观事物本身固有的本质联系，不以人的想法、愿望改变。规律不能被创造，也不能被消灭。它是我们实践活动的边界。</p>
+                <p><strong>主观能动性：</strong>人主动认识世界、思考、实践改造世界的能力。动物只能被动适应自然，人可以主动探索、实验、创新。</p>
+                <br>
+                <p>✅ 辩证统一关系：</p>
+                <p>① <b>尊重客观规律是发挥主观能动性的前提。</b>违背规律，再努力也只会失败。</p>
+                <p>② <b>发挥主观能动性，才能认识和利用客观规律。</b>规律藏在现象背后，不会自动显现，需要人主动探索研究。</p>
+                <p>❌ 两个误区：<b>唯意志论</b>（认为人的想法可以无视规律，盲目蛮干）；<b>宿命论</b>（认为一切都被规律定死，人不用努力）</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>案例切换（含新能源产业例子）</h2>
+            <div class="case-buttons">
+                <button class="case-btn active" data-case="newenergy">光伏&新能源汽车</button>
+                <button class="case-btn" data-case="seed">揠苗助长</button>
+                <button class="case-btn" data-case="flood">大禹治水</button>
+            </div>
+            <div class="case-content" id="caseBox">
+                <h3>案例：我国光伏、新能源汽车产业</h3>
+                <p>客观规律：材料物理、光电转换原理、电池电化学、能量守恒定律。电池能量密度、光伏转化率都存在客观物理上限，不能凭空突破。产业发展也受经济、供应链客观规律约束。</p>
+                <p>主观能动性：科研人员成千上万次实验攻关材料；企业持续投入研发；国家合理规划产业政策；工程师不断优化生产工艺。</p>
+                <p>辩证关系：我们不能违背物理定律造出“永动电池”；但如果不去主动做实验、研发，光电转化的规律永远不会变成光伏发电站、新能源车。<br>→ 尊重规律+主动实践，才能把潜在可能性变成现实。</p>
+            </div>
+            <div class="quiz">
+                <p>思考选择题：发展新能源汽车，只靠决心和政策，能不能突破材料物理极限？</p>
+                <div class="opt" data-ans="wrong">A.只要决心足够大，可以突破物理规律</div>
+                <div class="opt" data-ans="right">B.不能，物理规律客观存在；但发挥能动性可以在规律范围内不断提升性能</div>
+                <div class="opt" data-ans="wrong">C.规律不可改变，人类完全无法提升电池性能</div>
+                <div class="answer-text" id="quizAns">
+                    答案B。A犯了唯意志论；C是宿命论。规律限定上限，主观努力是在这个边界内挖掘潜力。
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>模拟实验：拖动滑块，观察实践结果</h2>
+            <p>调整两个维度，看看实践的最终效果，直观感受二者缺一不可</p>
+            <div class="slider-wrap">
+                <div class="slider-item">
+                    <label>主观能动性（努力、科研、实践强度）：<span id="effVal">50</span>%</label>
+                    <input type="range" id="effSlider" min="0" max="100" value="50">
+                </div>
+                <div class="slider-item">
+                    <label>尊重客观规律程度：<span id="lawVal">50</span>%</label>
+                    <input type="range" id="lawSlider" min="0" max="100" value="50">
+                </div>
+                <div class="result-box" id="resultBox">
+                    当前实践结果：待计算
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>两大常见误区辨析</h2>
+            <div class="misconception">
+                <div class="mis-card">
+                    <h3>唯意志论（夸大主观能动性）</h3>
+                    <p>例子：揠苗助长；过去违背自然规律围湖造田。以为只要人肯干，就能改变一切客观法则。<br>错误根源：无视客观条件与规律。</p>
+                </div>
+                <div class="mis-card">
+                    <h3>宿命论（否定主观能动性）</h3>
+                    <p>例子：觉得一切命中注定，不用努力；认为科技上限固定，人类不用研发新能源。<br>错误根源：只看到规律，看不到人可以认识、利用规律改造世界。</p>
+                </div>
+            </div>
+            <button class="btn" id="openMind">打开辩证关系思维导图</button>
+        </div>
+
+        <div class="section">
+            <h2>课后自测简答题</h2>
+            <p>1. 为什么我国发展光伏产业不能脱离材料科学的客观规律？</p>
+            <textarea id="q1"></textarea>
+            <p>2. 既然规律是客观的，为什么我们还要投入大量人力去研发新能源？</p>
+            <textarea id="q2"></textarea>
+            <button class="btn" id="showAnswer">查看参考作答</button>
+            <div class="answer-text" id="selfAns">
+                <p>1. 材料、能量转化规律是客观存在，无法人为取消。无视规律去研发只会浪费资源，所有技术突破都必须建立在物理化学规律之上。</p>
+                <p>2. 规律本身不会自动变成技术产品。虽然规律不变，但只有发挥主观能动性，主动实验探索，才能认识规律、利用规律，开发光伏、新能源车，实现产业发展。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 思维导图弹窗 -->
+    <div class="modal" id="mindModal">
+        <div class="modal-inner">
+            <button class="close-modal">关闭</button>
+            <h2>辩证统一思维导图</h2>
+            <pre style="font-size:15px;white-space:pre-wrap">
+客观规律 ←→ 主观能动性 【辩证统一】
+├─客观规律：不以人的意志转移，不能创造消灭
+│  └→ 约束：主观能动性必须以此为前提
+├─主观能动性：认识、思考、实践改造世界
+│  └→ 作用：只有主动探索，才能发现、利用规律
+├─错误观点
+│  ├─唯意志论：重能动性，无视规律（蛮干）
+│  └─宿命论：只看规律，否定人的实践（躺平）
+└─实例
+   ├─成功案例：新能源产业、大禹治水
+   └─失败案例：揠苗助长、盲目围湖造田
+            </pre>
+        </div>
+    </div>
+
+<script>
+    // 案例数据
+    const caseData = {
+        newenergy:{
+            title:"案例：光伏&新能源汽车产业",
+            content:`<h3>案例：我国光伏、新能源汽车产业</h3>
+            <p>客观规律：材料物理、光电转换原理、电池电化学、能量守恒定律。电池能量密度、光伏转化率都存在客观物理上限，不能凭空突破。产业发展也受经济、供应链客观规律约束。</p>
+            <p>主观能动性：科研人员成千上万次实验攻关材料；企业持续投入研发；国家合理规划产业政策；工程师不断优化生产工艺。</p>
+            <p>辩证关系：我们不能违背物理定律造出“永动电池”；但如果不去主动做实验、研发，光电转化的规律永远不会变成光伏发电站、新能源车。<br>→ 尊重规律+主动实践，才能把潜在可能性变成现实。</p>`,
+            quiz:"思考选择题：发展新能源汽车，只靠决心和政策，能不能突破材料物理极限？",
+            optA:"A.只要决心足够大，可以突破物理规律",
+            optB:"B.不能，物理规律客观存在；但发挥能动性可以在规律范围内不断提升性能",
+            optC:"C.规律不可改变，人类完全无法提升电池性能",
+            ans:"答案B。A犯了唯意志论；C是宿命论。规律限定上限，主观努力是在这个边界内挖掘潜力。"
+        },
+        seed:{
+            title:"案例：揠苗助长",
+            content:`<h3>案例：揠苗助长</h3>
+            <p>客观规律：禾苗生长，依靠根系吸水、光合作用，需要时间，生长节奏是客观的。</p>
+            <p>主观能动性：农夫很想禾苗长高，付出劳动把苗拔高（努力很强）。</p>
+            <p>辩证关系：农夫发挥了主观努力，但是完全违背植物生长客观规律。努力越大，破坏越严重，禾苗枯死。<br>👉 说明：脱离客观规律的主观能动性，只会带来失败。</p>`,
+            quiz:"思考选择题：农夫努力拔高禾苗，为什么禾苗反而死了？",
+            optA:"A.努力程度不够",
+            optB:"B.违背植物生长的客观规律",
+            optC:"C.禾苗自身的命运无法改变",
+            ans:"答案B。主观努力很强，但是违背客观规律，实践失败。A错，他已经付出大量劳动；C是宿命论错误观点。"
+        },
+        flood:{
+            title:"案例：大禹治水",
+            content:`<h3>案例：大禹治水</h3>
+            <p>客观规律：水的客观运动规律——水往低处流。鲧用堵的方式，对抗水流规律，治水失败。</p>
+            <p>主观能动性：大禹主动观察水文，总结经验，改变思路，疏导河道，利用水向下流动的规律治理洪水。</p>
+            <p>辩证关系：没有改变水流动的客观规律；但是发挥主观能动性，认识规律、顺应规律，改造河道，变水患为水利。</p>`,
+            quiz:"思考选择题：大禹治水成功，是因为他改变了水往低处流的规律吗？",
+            optA:"A.是，大禹改造了水流的客观规律",
+            optB:"B.不是，他认识并利用水流规律疏导洪水",
+            optC:"C.洪水的发生完全由命运决定",
+            ans:"答案B。规律不能被改变。大禹发挥能动性认识、利用规律。A错误，人不能改造客观规律；C属于宿命论。"
+        }
+    }
+
+    // 案例切换
+    const caseBtns = document.querySelectorAll(".case-btn");
+    const caseBox = document.getElementById("caseBox");
+    const quizAns = document.querySelector(".answer-text");
+    caseBtns.forEach(btn=>{
+        btn.onclick = function(){
+            caseBtns.forEach(b=>b.classList.remove("active"));
+            this.classList.add("active");
+            let key = this.dataset.case;
+            let data = caseData[key];
+            caseBox.innerHTML = data.content;
+            document.querySelector(".quiz p").innerText = data.quiz;
+            let opts = document.querySelectorAll(".opt");
+            opts[0].innerText = data.optA;
+            opts[1].innerText = data.optB;
+            opts[2].innerText = data.optC;
+            quizAns.innerText = data.ans;
+            quizAns.style.display = "none";
+        }
+    })
+    // 选择题点击
+    document.querySelectorAll(".opt").forEach(opt=>{
+        opt.onclick = function(){
+            quizAns.style.display = "block";
+        }
+    })
+
+    // 滑块计算逻辑
+    const effSlider = document.getElementById("effSlider");
+    const lawSlider = document.getElementById("lawSlider");
+    const effVal = document.getElementById("effVal");
+    const lawVal = document.getElementById("lawVal");
+    const resultBox = document.getElementById("resultBox");
+    function calcResult(){
+        let e = Number(effSlider.value);
+        let l = Number(lawSlider.value);
+        effVal.innerText = e;
+        lawVal.innerText = l;
+        // 综合得分 = 两者相乘/100
+        let score = e * l / 100;
+        let text,cls;
+        if(score <30){
+            text = `综合实践得分：${score.toFixed(1)}｜❌ 失败。要么不尊重规律，要么完全不付出努力`;
+            cls = "bad";
+        }else if(score<70){
+            text = `综合实践得分：${score.toFixed(1)}｜⚠️ 一般。二者匹配度不足，实践效果有限`;
+            cls = "normal";
+        }else{
+            text = `综合实践得分：${score.toFixed(1)}｜✅ 成功。尊重客观规律，同时充分发挥主观能动性`;
+            cls = "good";
+        }
+        resultBox.className = "result-box "+cls;
+        resultBox.innerText = text;
+    }
+    effSlider.oninput = calcResult;
+    lawSlider.oninput = calcResult;
+    calcResult();
+
+    // 思维导图弹窗
+    const mindModal = document.getElementById("mindModal");
+    document.getElementById("openMind").onclick = ()=>mindModal.style.display="flex";
+    document.querySelector(".close-modal").onclick = ()=>mindModal.style.display="none";
+
+    // 自测答案
+    document.getElementById("showAnswer").onclick = function(){
+        document.getElementById("selfAns").style.display = "block";
+    }
+</script>
+</body>
+</html>
