@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>客观规律与主观能动性｜马原交互式学习系统</title>
+    <title>客观规律性与主观能动性｜马原交互式学习系统</title>
     <style>
         :root{
             --primary:#3949ab;
@@ -719,7 +719,7 @@
                         <div class="tip-box">
                             <strong>易错表述区分：</strong>
                             <br>✅ 正确表述：认识规律、利用规律、改变客观条件
-                            <br>❌ 错误表述：创造规律、消灭规律、改造规律
+                            <br>❌ 错误表述：创造规律、消灭规律、改造规律本身
                         </div>
                     </div>
                     <div class="table-wrap">
@@ -965,7 +965,7 @@
 │  ├─唯意志论：重能动性，无视规律（蛮干）
 │  └─宿命论：只看规律，否定人的实践（躺平）
 └─实例
-   ├─成功：新能源、青蒿素、大禹治水、都江堰、温室大棚
+   ├─成功：新能源、青蒿素、都江堰、温室大棚
    └─失败：揠苗助长、大跃进
             </pre>
         </div>
@@ -1048,5 +1048,162 @@
             ans:"答案B。典型唯意志论，否定客观规律对实践的制约作用。"
         }
     }
+
     // 案例切换逻辑
-   
+    const caseBtns = document.querySelectorAll('.case-btn');
+    const caseBox = document.getElementById('caseBox');
+    caseBtns.forEach(btn=>{
+        btn.onclick = function(){
+            caseBtns.forEach(b=>b.classList.remove('active'));
+            this.classList.add('active');
+            const key = this.dataset.case;
+            caseBox.innerHTML = caseData[key].content;
+        }
+    })
+
+    // 查看案例解析
+    const showCaseAns = document.getElementById('showCaseAns');
+    const caseQuizAns = document.getElementById('caseQuizAns');
+    showCaseAns.onclick = function(){
+        caseQuizAns.classList.toggle('show');
+    }
+
+    // 折叠面板
+    const collapseHeaders = document.querySelectorAll('.collapse-header');
+    collapseHeaders.forEach(h=>{
+        h.onclick = function(){
+            const cont = this.nextElementSibling;
+            cont.classList.toggle('open');
+        }
+    })
+
+    // 主题切换
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.onclick = function(){
+        if(document.body.hasAttribute('data-theme')){
+            document.body.removeAttribute('data-theme');
+        }else{
+            document.body.setAttribute('data-theme','dark');
+        }
+    }
+
+    // 回到顶部
+    const backTopBtn = document.getElementById('backTop');
+    window.addEventListener('scroll',()=>{
+        if(window.scrollY>300){
+            backTopBtn.classList.add('show');
+        }else{
+            backTopBtn.classList.remove('show');
+        }
+        //页面进度条
+        const scrollTop = window.scrollY;
+        const docHeight = document.body.scrollHeight - window.innerHeight;
+        const percent = (scrollTop/docHeight)*100;
+        document.getElementById('pageProgress').style.width = percent+'%';
+    })
+    backTopBtn.onclick = ()=> window.scrollTo({top:0,behavior:'smooth'});
+
+    //思维导图弹窗
+    const mindModal = document.getElementById('mindModal');
+    document.getElementById('openMind').onclick = ()=> mindModal.style.display="flex";
+    document.querySelector('.close-modal').onclick = ()=> mindModal.style.display="none";
+    window.addEventListener('keydown',e=>{
+        if(e.key==="Escape") mindModal.style.display="none";
+    })
+
+    //模拟实验滑块
+    const effSlider = document.getElementById('effSlider');
+    const lawSlider = document.getElementById('lawSlider');
+    const effVal = document.getElementById('effVal');
+    const lawVal = document.getElementById('lawVal');
+    const resultBox = document.getElementById('resultBox');
+    const canvas = document.getElementById('chartCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+
+    function calcResult(){
+        const e = Number(effSlider.value);
+        const l = Number(lawSlider.value);
+        effVal.innerText = e;
+        lawVal.innerText = l;
+        //得分公式
+        let score = 0;
+        if(l===0){
+            score = 0;
+        }else{
+            score = Math.round( (e/100) * (l/100)*100 )
+        }
+        let cls = "bad";
+        let text = "";
+        if(score<30){
+            cls="bad";
+            text=`当前得分：${score}｜违背客观规律，实践大概率失败（唯意志论）`;
+        }else if(score<70){
+            cls="normal";
+            text=`当前得分：${score}｜部分尊重规律，实践效果一般`;
+        }else{
+            cls="good";
+            text=`当前得分：${score}｜尊重规律+充分发挥能动性，实践成功！`;
+        }
+        resultBox.className = "result-box "+cls;
+        resultBox.innerText = text;
+        //绘制简单曲线图
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.beginPath();
+        ctx.strokeStyle="#3949ab";
+        ctx.lineWidth=3;
+        ctx.moveTo(0,canvas.height);
+        ctx.lineTo(canvas.width * (score/100), canvas.height - score*1.2);
+        ctx.stroke();
+    }
+    effSlider.oninput = calcResult;
+    lawSlider.oninput = calcResult;
+    calcResult();
+
+    //习题选项点击
+    const opts = document.querySelectorAll('.opt');
+    opts.forEach(opt=>{
+        opt.onclick = function(){
+            const p = this.parentElement;
+            const panel = p.querySelector('.answer-panel');
+            if(panel) panel.classList.add('show');
+            p.querySelectorAll('.opt').forEach(o=>{
+                o.classList.remove('correct','wrong');
+            })
+            if(this.dataset.ans==="right"){
+                this.classList.add('correct');
+            }else{
+                this.classList.add('wrong');
+            }
+        }
+    })
+
+    //全部简答答案
+    document.getElementById('showAllAns').onclick = function(){
+        document.getElementById('selfAns').classList.toggle('show');
+    }
+    document.getElementById('resetQuiz').onclick = function(){
+        document.querySelectorAll('.opt').forEach(o=>o.classList.remove('correct','wrong'));
+        document.querySelectorAll('.answer-panel').forEach(p=>p.classList.remove('show'));
+        document.getElementById('q1').value="";
+        document.getElementById('q2').value="";
+    }
+
+    //复制背诵文本
+    document.getElementById('copyText').onclick = async function(){
+        const txt = `辩证唯物主义认为，规律是客观的，不以人的意志为转移，不能创造、消灭。尊重客观规律，是正确发挥主观能动性的前提。只有充分发挥主观能动性，通过实践活动，才能认识隐藏的客观规律，并改变客观条件，利用规律改造世界。实践是客观规律性和主观能动性统一的基础。我们要反对唯意志论（夸大能动性，无视规律），也要反对宿命论（否定人的主观努力）。
+同时，客观规律体现相对静止，人类的实践科研属于绝对运动，静中有动、动中有静。以光伏、新能源汽车产业为例：光电转化物理法则保持稳定（静），科研人员持续实验创新、推进产业发展（动），在尊重物理规律的基础上不断突破技术，实现产业腾飞。`;
+        await navigator.clipboard.writeText(txt);
+        alert("背诵文本复制成功！");
+    }
+
+    //加载动画
+    window.onload = function(){
+        setTimeout(()=>{
+            document.getElementById('loader').classList.add('hide');
+        },400)
+    }
+</script>
+</body>
+</html>
