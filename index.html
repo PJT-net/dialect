@@ -6,36 +6,197 @@
     <title>客观规律与主观能动性 辩证统一｜马原交互演示</title>
     <style>
         *{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft YaHei",sans-serif}
-        body{background:#f5f7fa;color:#2c3e50;padding:20px;line-height:1.7}
-        .container{max-width:1000px;margin:0 auto;background:#fff;border-radius:16px;padding:30px;box-shadow:0 4px 16px rgba(0,0,0,0.08)}
+        /* 全局入场动画 */
+        @keyframes fadeInUp {
+            from {opacity:0;transform:translateY(24px);}
+            to {opacity:1;transform:translateY(0);}
+        }
+        @keyframes fadeIn {
+            from {opacity:0;}
+            to {opacity:1;}
+        }
+        @keyframes popScale {
+            from {opacity:0;transform:scale(0.92);}
+            to {opacity:1;transform:scale(1);}
+        }
+        body{
+            background:linear-gradient(135deg,#f0f4ff,#f7f9fc);
+            color:#2c3e50;
+            padding:20px;
+            line-height:1.7;
+        }
+        .container{
+            max-width:1000px;
+            margin:0 auto;
+            background:#fff;
+            border-radius:16px;
+            padding:30px;
+            box-shadow:0 4px 16px rgba(0,0,0,0.08);
+            animation: fadeInUp 0.7s ease-out;
+        }
+        .section{
+            margin:28px 0;
+            border-bottom:1px solid #eee;
+            padding-bottom:24px;
+            animation: fadeInUp 0.7s ease-out;
+            animation-fill-mode:both;
+        }
+        /* 错开各模块入场时间 */
+        .section:nth-child(2){animation-delay:0.1s;}
+        .section:nth-child(3){animation-delay:0.2s;}
+        .section:nth-child(4){animation-delay:0.3s;}
+        .section:nth-child(5){animation-delay:0.4s;}
+        .section:nth-child(6){animation-delay:0.5s;}
+
         h1{text-align:center;color:#2962ff;margin-bottom:10px;font-size:26px}
         .subtitle{text-align:center;color:#666;margin-bottom:30px}
-        .section{margin:28px 0;border-bottom:1px solid #eee;padding-bottom:24px}
         h2{color:#3949ab;margin-bottom:16px;font-size:20px}
-        .card{background:#f0f6ff;padding:20px;border-radius:12px;margin:16px 0}
+        .card{
+            background:#f0f6ff;
+            padding:20px;
+            border-radius:12px;
+            margin:16px 0;
+            transition: all 0.3s ease;
+        }
+        .card:hover{
+            transform: translateY(-4px);
+            box-shadow:0 6px 18px rgba(41,98,255,0.12);
+        }
         .case-buttons{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0}
-        .case-btn{padding:10px 18px;border:none;border-radius:8px;background:#5c6bc0;color:#fff;cursor:pointer;transition:0.3s;font-size:15px}
-        .case-btn.active{background:#2962ff}
-        .case-content{padding:16px;background:#fff;border-radius:10px;margin-top:12px;min-height:140px}
+        .case-btn{
+            padding:10px 18px;
+            border:none;
+            border-radius:8px;
+            background:#5c6bc0;
+            color:#fff;
+            cursor:pointer;
+            transition: all 0.3s ease;
+            font-size:15px
+        }
+        .case-btn:hover{
+            transform: translateY(-2px);
+            background:#4859a8;
+        }
+        .case-btn.active{background:#2962ff;transform:scale(1.03);}
+        .case-content{
+            padding:16px;
+            background:#fff;
+            border-radius:10px;
+            margin-top:12px;
+            min-height:140px;
+            transition: opacity 0.4s ease;
+        }
         .slider-wrap{margin:20px 0}
         .slider-item{margin:18px 0}
         .slider-item label{display:block;margin-bottom:6px;font-weight:bold}
-        input[type="range"]{width:100%;height:8px}
-        .result-box{padding:16px;border-radius:10px;font-weight:bold;font-size:18px;text-align:center;margin-top:12px}
+        input[type="range"]{width:100%;height:8px;cursor:pointer}
+        .result-box{
+            padding:16px;
+            border-radius:10px;
+            font-weight:bold;
+            font-size:18px;
+            text-align:center;
+            margin-top:12px;
+            transition: all 0.4s ease;
+        }
         .bad{background:#ffebee;color:#c62828}
         .normal{background:#fff8e1;color:#f57c00}
         .good{background:#e8f5e9;color:#2e7d32}
         .quiz{margin-top:16px}
-        .opt{display:block;padding:10px;margin:8px 0;border:1px solid #ddd;border-radius:8px;cursor:pointer;transition:0.2s}
-        .opt:hover{border-color:#2962ff;background:#f3f6ff}
-        .answer-text{margin-top:12px;padding:12px;background:#eef2ff;border-radius:8px;display:none}
+        .opt{
+            display:block;
+            padding:10px;
+            margin:8px 0;
+            border:1px solid #ddd;
+            border-radius:8px;
+            cursor:pointer;
+            transition: all 0.25s ease;
+        }
+        .opt:hover{
+            border-color:#2962ff;
+            background:#f3f6ff;
+            transform: translateX(4px);
+        }
+        .answer-text{
+            margin-top:12px;
+            padding:12px;
+            background:#eef2ff;
+            border-radius:8px;
+            opacity:0;
+            transition: opacity 0.45s ease;
+        }
+        .answer-text.show{opacity:1;display:block;}
         .misconception{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
-        .mis-card{padding:18px;background:#fafafa;border-radius:10px;border-left:4px solid #ff5722}
-        .btn{padding:9px 16px;border:none;border-radius:8px;background:#3949ab;color:#fff;cursor:pointer;margin:8px 0}
-        .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;padding:20px}
-        .modal-inner{background:#fff;padding:24px;border-radius:14px;max-width:700px;max-height:80vh;overflow:auto}
-        .close-modal{float:right;border:none;background:#ddd;padding:6px 12px;border-radius:6px;cursor:pointer}
-        textarea{width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;margin:10px 0;min-height:80px}
+        .mis-card{
+            padding:18px;
+            background:#fafafa;
+            border-radius:10px;
+            border-left:4px solid #ff5722;
+            transition: 0.3s ease;
+        }
+        .mis-card:hover{
+            transform: translateY(-3px);
+            box-shadow:0 4px 12px rgba(255,87,34,0.1);
+        }
+        .btn{
+            padding:9px 16px;
+            border:none;
+            border-radius:8px;
+            background:#3949ab;
+            color:#fff;
+            cursor:pointer;
+            margin:8px 0;
+            transition: all 0.3s ease;
+        }
+        .btn:hover{
+            transform: translateY(-2px);
+            box-shadow:0 4px 12px rgba(57,73,171,0.25);
+        }
+        .modal{
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            background:rgba(0,0,0,0.5);
+            display:none;
+            align-items:center;
+            justify-content:center;
+            padding:20px;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal-inner{
+            background:#fff;
+            padding:24px;
+            border-radius:14px;
+            max-width:700px;
+            max-height:80vh;
+            overflow:auto;
+            animation: popScale 0.35s ease;
+        }
+        .close-modal{
+            float:right;
+            border:none;
+            background:#ddd;
+            padding:6px 12px;
+            border-radius:6px;
+            cursor:pointer;
+            transition:0.2s;
+        }
+        .close-modal:hover{background:#bbb;}
+        textarea{
+            width:100%;
+            padding:12px;
+            border:1px solid #ccc;
+            border-radius:8px;
+            margin:10px 0;
+            min-height:80px;
+            transition: border 0.3s;
+        }
+        textarea:focus{
+            outline:none;
+            border-color:#2962ff;
+        }
     </style>
 </head>
 <body>
@@ -199,20 +360,24 @@
             this.classList.add("active");
             let key = this.dataset.case;
             let data = caseData[key];
-            caseBox.innerHTML = data.content;
-            document.querySelector(".quiz p").innerText = data.quiz;
-            let opts = document.querySelectorAll(".opt");
-            opts[0].innerText = data.optA;
-            opts[1].innerText = data.optB;
-            opts[2].innerText = data.optC;
-            quizAns.innerText = data.ans;
-            quizAns.style.display = "none";
+            caseBox.style.opacity = 0;
+            setTimeout(()=>{
+                caseBox.innerHTML = data.content;
+                document.querySelector(".quiz p").innerText = data.quiz;
+                let opts = document.querySelectorAll(".opt");
+                opts[0].innerText = data.optA;
+                opts[1].innerText = data.optB;
+                opts[2].innerText = data.optC;
+                quizAns.innerText = data.ans;
+                quizAns.classList.remove("show");
+                caseBox.style.opacity = 1;
+            },200)
         }
     })
     // 选择题点击
     document.querySelectorAll(".opt").forEach(opt=>{
         opt.onclick = function(){
-            quizAns.style.display = "block";
+            quizAns.classList.add("show");
         }
     })
 
@@ -251,10 +416,15 @@
     const mindModal = document.getElementById("mindModal");
     document.getElementById("openMind").onclick = ()=>mindModal.style.display="flex";
     document.querySelector(".close-modal").onclick = ()=>mindModal.style.display="none";
+    // 点击弹窗背景关闭
+    mindModal.onclick = function(e){
+        if(e.target === mindModal) mindModal.style.display="none";
+    }
 
     // 自测答案
     document.getElementById("showAnswer").onclick = function(){
-        document.getElementById("selfAns").style.display = "block";
+        const selfAns = document.getElementById("selfAns");
+        selfAns.classList.add("show");
     }
 </script>
 </body>
