@@ -3,154 +3,329 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>客观规律与主观能动性 辩证统一｜马原交互演示</title>
+    <title>客观规律与主观能动性｜马原交互式学习</title>
     <style>
-        *{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft YaHei",sans-serif}
-        /* 全局入场动画 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", system-ui, sans-serif;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        /* 全局动画定义 */
         @keyframes fadeInUp {
-            from {opacity:0;transform:translateY(24px);}
-            to {opacity:1;transform:translateY(0);}
+            from {opacity: 0; transform: translateY(30px);}
+            to {opacity: 1; transform: translateY(0);}
         }
         @keyframes fadeIn {
             from {opacity:0;}
             to {opacity:1;}
         }
         @keyframes popScale {
-            from {opacity:0;transform:scale(0.92);}
-            to {opacity:1;transform:scale(1);}
+            from {opacity:0; transform: scale(0.92);}
+            to {opacity:1; transform: scale(1);}
         }
-        body{
-            background:linear-gradient(135deg,#f0f4ff,#f7f9fc);
-            color:#2c3e50;
-            padding:20px;
-            line-height:1.7;
+        @keyframes bounceTip {
+            0%,100%{transform: translateY(0);}
+            50%{transform: translateY(-4px);}
+        }
+        @keyframes loadingSpin {
+            to {transform: rotate(360deg);}
+        }
+        /* 加载遮罩 */
+        .loader-wrap{
+            position:fixed;
+            inset:0;
+            background:#fff;
+            z-index:9999;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+        .spinner{
+            width:48px;
+            height:48px;
+            border:4px solid #e0e7ff;
+            border-top-color:#2962ff;
+            border-radius:50%;
+            animation:loadingSpin 0.8s linear infinite;
+        }
+        .loader-wrap.hide{
+            opacity:0;
+            pointer-events:none;
+            transition:opacity 0.6s ease;
+        }
+        body {
+            background: linear-gradient(135deg, #edf2ff, #f7f9fc);
+            color: #2c3e50;
+            line-height: 1.7;
+            padding-top:70px;
+        }
+        /* 顶部导航 */
+        nav{
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            background:rgba(255,255,255,0.92);
+            backdrop-filter: blur(8px);
+            box-shadow:0 2px 10px rgba(0,0,0,0.07);
+            z-index:99;
+        }
+        .nav-inner{
+            max-width:1000px;
+            margin:0 auto;
+            display:flex;
+            gap:20px;
+            padding:14px 20px;
+        }
+        .nav-item{
+            color:#3949ab;
+            text-decoration:none;
+            font-weight:500;
+            transition:0.3s;
+            padding:4px 0;
+            border-bottom:2px solid transparent;
+        }
+        .nav-item.active{
+            border-color:#2962ff;
+            color:#2962ff;
+        }
+        .nav-item:hover{
+            color:#2962ff;
         }
         .container{
             max-width:1000px;
             margin:0 auto;
-            background:#fff;
-            border-radius:16px;
-            padding:30px;
-            box-shadow:0 4px 16px rgba(0,0,0,0.08);
-            animation: fadeInUp 0.7s ease-out;
+            background:#ffffff;
+            border-radius:18px;
+            padding:32px;
+            box-shadow:0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom:40px;
         }
         .section{
-            margin:28px 0;
-            border-bottom:1px solid #eee;
-            padding-bottom:24px;
-            animation: fadeInUp 0.7s ease-out;
-            animation-fill-mode:both;
+            margin:32px 0;
+            border-bottom:1px solid #e8e8e8;
+            padding-bottom:28px;
+            opacity:0;
+            animation:fadeInUp 0.7s ease-out forwards;
         }
-        /* 错开各模块入场时间 */
-        .section:nth-child(2){animation-delay:0.1s;}
-        .section:nth-child(3){animation-delay:0.2s;}
-        .section:nth-child(4){animation-delay:0.3s;}
-        .section:nth-child(5){animation-delay:0.4s;}
-        .section:nth-child(6){animation-delay:0.5s;}
-
-        h1{text-align:center;color:#2962ff;margin-bottom:10px;font-size:26px}
-        .subtitle{text-align:center;color:#666;margin-bottom:30px}
-        h2{color:#3949ab;margin-bottom:16px;font-size:20px}
+        .section:nth-of-type(2){animation-delay:0.1s;}
+        .section:nth-of-type(3){animation-delay:0.2s;}
+        .section:nth-of-type(4){animation-delay:0.3s;}
+        .section:nth-of-type(5){animation-delay:0.4s;}
+        .section:nth-of-type(6){animation-delay:0.5s;}
+        .section:nth-of-type(7){animation-delay:0.6s;}
+        h1{
+            text-align:center;
+            color:#2962ff;
+            margin-bottom:12px;
+            font-size:28px;
+        }
+        .subtitle{
+            text-align:center;
+            color:#666;
+            margin-bottom:32px;
+        }
+        h2{
+            color:#3949ab;
+            margin-bottom:18px;
+            font-size:22px;
+        }
+        h3{
+            color:#424242;
+            margin-bottom:10px;
+        }
         .card{
             background:#f0f6ff;
-            padding:20px;
-            border-radius:12px;
-            margin:16px 0;
-            transition: all 0.3s ease;
+            padding:22px;
+            border-radius:14px;
+            margin:18px 0;
+            transition:all 0.3s ease;
         }
         .card:hover{
-            transform: translateY(-4px);
-            box-shadow:0 6px 18px rgba(41,98,255,0.12);
+            transform: translateY(-5px);
+            box-shadow:0 7px 20px rgba(41,98,255,0.14);
         }
-        .case-buttons{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0}
+        /* 翻转卡片 */
+        .flip-wrap{
+            display:grid;
+            grid-template-columns: 1fr 1fr;
+            gap:20px;
+            margin:20px 0;
+        }
+        .flip-card{
+            perspective: 1000px;
+            height:220px;
+        }
+        .flip-inner{
+            width:100%;
+            height:100%;
+            transition:transform 0.6s;
+            transform-style:preserve-3d;
+            position:relative;
+        }
+        .flip-card:hover .flip-inner{
+            transform:rotateY(180deg);
+        }
+        .flip-front,.flip-back{
+            position:absolute;
+            width:100%;
+            height:100%;
+            backface-visibility:hidden;
+            border-radius:12px;
+            padding:20px;
+        }
+        .flip-front{
+            background:#eef2ff;
+        }
+        .flip-back{
+            background:#3949ab;
+            color:white;
+            transform:rotateY(180deg);
+            overflow:auto;
+        }
+        .case-buttons{
+            display:flex;
+            gap:12px;
+            flex-wrap:wrap;
+            margin:14px 0;
+        }
         .case-btn{
-            padding:10px 18px;
+            padding:11px 20px;
             border:none;
-            border-radius:8px;
+            border-radius:9px;
             background:#5c6bc0;
             color:#fff;
             cursor:pointer;
-            transition: all 0.3s ease;
-            font-size:15px
+            transition:all 0.3s ease;
+            font-size:15px;
         }
         .case-btn:hover{
             transform: translateY(-2px);
             background:#4859a8;
         }
-        .case-btn.active{background:#2962ff;transform:scale(1.03);}
-        .case-content{
-            padding:16px;
-            background:#fff;
-            border-radius:10px;
-            margin-top:12px;
-            min-height:140px;
-            transition: opacity 0.4s ease;
+        .case-btn.active{
+            background:#2962ff;
+            transform:scale(1.04);
         }
-        .slider-wrap{margin:20px 0}
-        .slider-item{margin:18px 0}
-        .slider-item label{display:block;margin-bottom:6px;font-weight:bold}
-        input[type="range"]{width:100%;height:8px;cursor:pointer}
-        .result-box{
-            padding:16px;
-            border-radius:10px;
+        .case-content{
+            padding:20px;
+            background:#fff;
+            border-radius:12px;
+            margin-top:14px;
+            min-height:160px;
+            transition:opacity 0.45s ease;
+            border:1px solid #e7edff;
+        }
+        .slider-wrap{
+            margin:24px 0;
+            padding:20px;
+            background:#f8faff;
+            border-radius:12px;
+        }
+        .slider-item{
+            margin:20px 0;
+        }
+        .slider-item label{
+            display:block;
+            margin-bottom:8px;
             font-weight:bold;
-            font-size:18px;
+        }
+        input[type="range"]{
+            width:100%;
+            height:10px;
+            border-radius:5px;
+            background:#dde3f5;
+            outline:none;
+            -webkit-appearance:none;
+        }
+        input[type="range"]::-webkit-slider-thumb{
+            -webkit-appearance:none;
+            width:20px;
+            height:20px;
+            border-radius:50%;
+            background:#2962ff;
+            cursor:pointer;
+            box-shadow:0 2px 8px #0003;
+        }
+        .result-box{
+            padding:18px;
+            border-radius:12px;
+            font-weight:bold;
+            font-size:19px;
             text-align:center;
-            margin-top:12px;
-            transition: all 0.4s ease;
+            margin-top:16px;
+            transition:all 0.45s ease;
         }
         .bad{background:#ffebee;color:#c62828}
         .normal{background:#fff8e1;color:#f57c00}
         .good{background:#e8f5e9;color:#2e7d32}
-        .quiz{margin-top:16px}
+        .icon-anim{
+            display:inline-block;
+            animation:bounceTip 1.2s ease-in-out infinite;
+        }
+        .quiz{margin-top:18px}
         .opt{
             display:block;
-            padding:10px;
-            margin:8px 0;
+            padding:12px;
+            margin:9px 0;
             border:1px solid #ddd;
-            border-radius:8px;
+            border-radius:9px;
             cursor:pointer;
-            transition: all 0.25s ease;
+            transition:all 0.28s ease;
         }
         .opt:hover{
             border-color:#2962ff;
             background:#f3f6ff;
-            transform: translateX(4px);
+            transform: translateX(5px);
         }
         .answer-text{
-            margin-top:12px;
-            padding:12px;
+            margin-top:14px;
+            padding:14px;
             background:#eef2ff;
-            border-radius:8px;
-            opacity:0;
-            transition: opacity 0.45s ease;
-        }
-        .answer-text.show{opacity:1;display:block;}
-        .misconception{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
-        .mis-card{
-            padding:18px;
-            background:#fafafa;
             border-radius:10px;
-            border-left:4px solid #ff5722;
-            transition: 0.3s ease;
+            opacity:0;
+            transition:opacity 0.5s ease;
+            display:none;
+        }
+        .answer-text.show{
+            opacity:1;
+            display:block;
+        }
+        .misconception{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:20px;
+            margin:24px 0;
+        }
+        .mis-card{
+            padding:20px;
+            background:#fafafa;
+            border-radius:12px;
+            border-left:5px solid #ff5722;
+            transition:0.3s ease;
         }
         .mis-card:hover{
-            transform: translateY(-3px);
-            box-shadow:0 4px 12px rgba(255,87,34,0.1);
+            transform: translateY(-4px);
+            box-shadow:0 5px 14px rgba(255,87,34,0.12);
         }
         .btn{
-            padding:9px 16px;
+            padding:10px 18px;
             border:none;
-            border-radius:8px;
+            border-radius:9px;
             background:#3949ab;
             color:#fff;
             cursor:pointer;
-            margin:8px 0;
-            transition: all 0.3s ease;
+            margin:10px 0;
+            transition:all 0.3s ease;
+            font-size:15px;
         }
         .btn:hover{
             transform: translateY(-2px);
-            box-shadow:0 4px 12px rgba(57,73,171,0.25);
+            box-shadow:0 4px 14px rgba(57,73,171,0.25);
         }
         .modal{
             position:fixed;
@@ -158,71 +333,167 @@
             left:0;
             width:100%;
             height:100%;
-            background:rgba(0,0,0,0.5);
+            background:rgba(0,0,0,0.55);
+            backdrop-filter: blur(4px);
             display:none;
             align-items:center;
             justify-content:center;
             padding:20px;
-            animation: fadeIn 0.3s ease;
+            z-index:98;
+            animation:fadeIn 0.35s ease;
         }
         .modal-inner{
             background:#fff;
-            padding:24px;
-            border-radius:14px;
-            max-width:700px;
-            max-height:80vh;
+            padding:28px;
+            border-radius:16px;
+            max-width:750px;
+            max-height:82vh;
             overflow:auto;
-            animation: popScale 0.35s ease;
+            animation:popScale 0.4s ease;
         }
         .close-modal{
             float:right;
             border:none;
             background:#ddd;
-            padding:6px 12px;
-            border-radius:6px;
+            padding:7px 14px;
+            border-radius:7px;
             cursor:pointer;
-            transition:0.2s;
+            transition:0.25s;
         }
         .close-modal:hover{background:#bbb;}
         textarea{
             width:100%;
-            padding:12px;
+            padding:14px;
             border:1px solid #ccc;
-            border-radius:8px;
-            margin:10px 0;
-            min-height:80px;
-            transition: border 0.3s;
+            border-radius:10px;
+            margin:12px 0;
+            min-height:90px;
+            transition:border 0.35s;
+            font-size:15px;
         }
         textarea:focus{
             outline:none;
             border-color:#2962ff;
         }
+        .back-top{
+            position:fixed;
+            bottom:24px;
+            right:24px;
+            width:44px;
+            height:44px;
+            border-radius:50%;
+            border:none;
+            background:#2962ff;
+            color:white;
+            font-size:20px;
+            cursor:pointer;
+            box-shadow:0 3px 12px rgba(41,98,255,0.28);
+            opacity:0;
+            pointer-events:none;
+            transition:0.3s;
+        }
+        .back-top.show{
+            opacity:1;
+            pointer-events:auto;
+        }
+        .tip-block{
+            background:#fff3e0;
+            border-left:4px solid #ff9800;
+            padding:14px;
+            border-radius:0 10px 10px 0;
+            margin:16px 0;
+        }
     </style>
 </head>
 <body>
+    <!-- 加载动画 -->
+    <div class="loader-wrap" id="loader">
+        <div class="spinner"></div>
+    </div>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="nav-inner">
+            <a href="#theory" class="nav-item">核心原理</a>
+            <a href="#flipCard" class="nav-item">考点速记</a>
+            <a href="#cases" class="nav-item">案例库</a>
+            <a href="#sim" class="nav-item">模拟实验</a>
+            <a href="#error" class="nav-item">误区辨析</a>
+            <a href="#test" class="nav-item">自测习题</a>
+        </div>
+    </nav>
     <div class="container">
         <h1>客观规律与主观能动性的辩证统一</h1>
-        <div class="subtitle">交互式学习演示｜马克思主义哲学</div>
+        <div class="subtitle">交互式马原学习演示｜拓展知识点 + 多案例解析</div>
 
-        <div class="section">
-            <h2>理论理解（个人解读）</h2>
+        <div class="section" id="theory">
+            <h2>一、理论理解（个人深度解读）</h2>
             <div class="card">
-                <p><strong>客观规律：</strong>客观事物本身固有的本质联系，不以人的想法、愿望改变。规律不能被创造，也不能被消灭。它是我们实践活动的边界。</p>
-                <p><strong>主观能动性：</strong>人主动认识世界、思考、实践改造世界的能力。动物只能被动适应自然，人可以主动探索、实验、创新。</p>
+                <p><strong>客观规律：</strong>事物本身固有的、本质的、必然的、稳定的联系。<br>三大特性：<b>客观性（不以人的意志为转移）、普遍性、条件性</b>。</p>
+                <p>✅ 重点：人类<strong>不能创造、消灭、改造规律本身</strong>；但是可以认识规律、改变客观条件，利用规律。</p>
                 <br>
-                <p>✅ 辩证统一关系：</p>
-                <p>① <b>尊重客观规律是发挥主观能动性的前提。</b>违背规律，再努力也只会失败。</p>
-                <p>② <b>发挥主观能动性，才能认识和利用客观规律。</b>规律藏在现象背后，不会自动显现，需要人主动探索研究。</p>
-                <p>❌ 两个误区：<b>唯意志论</b>（认为人的想法可以无视规律，盲目蛮干）；<b>宿命论</b>（认为一切都被规律定死，人不用努力）</p>
+                <p><strong>主观能动性（自觉能动性）：</strong>是人特有的能力。分为两层：①能动地认识世界；②能动地改造世界（实践）。</p>
+                <br>
+                <p>✅ 辩证统一三层关系：</p>
+                <p>1. <b>尊重客观规律是正确发挥主观能动性的前提。</b>违背规律，能动性越强，失败越严重。</p>
+                <p>2. <b>充分发挥主观能动性，才能认识和掌握客观规律。</b>规律隐藏在现象背后，不会自动显现，需要反复实践、观察、思考。</p>
+                <p>3. <b>实践是二者统一的基础。</b>只有通过实践，才能认识规律；只有实践，才能利用规律改造世界。</p>
+                <br>
+                <div class="tip-block">
+                    <strong>跨知识点联动：静中有动、动中有静</strong><br>
+                    客观规律是相对“静”的底层法则（规律不变）；主观能动性是“动”的实践活动。
+                    静（规律）约束动（人的实践）；动（探索实践）发现静（内在规律）。完美体现绝对运动与相对静止辩证关系。
+                </div>
+                <p>❌ 两种典型错误思潮：</p>
+                <p>• <b>唯意志论</b>：片面夸大主观能动性，无视客观规律，盲目蛮干</p>
+                <p>• <b>宿命论</b>：夸大客观规律，否定人的主观努力，消极等待、躺平</p>
             </div>
         </div>
 
-        <div class="section">
-            <h2>案例切换（含新能源产业例子）</h2>
+        <div class="section" id="flipCard">
+            <h2>二、考点速记卡片（鼠标悬停翻转）</h2>
+            <div class="flip-wrap">
+                <div class="flip-card">
+                    <div class="flip-inner">
+                        <div class="flip-front">
+                            <h3>易错点1</h3>
+                            <p>能不能创造规律？</p>
+                            <p>正面概念辨析</p>
+                            <p style="margin-top:30px;">鼠标悬浮翻转查看考点</p>
+                        </div>
+                        <div class="flip-back">
+                            <h3>答案：不能！</h3>
+                            <p>规律是客观的，无法创造、消灭、修改。</p>
+                            <p>✅ 正确表述：认识规律、利用规律、改变条件。</p>
+                            <p>❌ 错误表述：创造规律、消灭规律、改造规律。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-inner">
+                        <div class="flip-front">
+                            <h3>考点简答模板</h3>
+                            <p>主观能动性与客观规律辩证关系答题模板</p>
+                            <p style="margin-top:30px;">鼠标悬浮翻转查看</p>
+                        </div>
+                        <div class="flip-back">
+                            <p>①规律客观性，不能创造消灭，尊重规律是前提；</p>
+                            <p>②发挥能动性才能认识利用规律；</p>
+                            <p>③坚持二者统一，反对唯意志论、宿命论；</p>
+                            <p>④结合材料举例（新能源、治水等）。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="cases">
+            <h2>三、案例库（新增温室大棚、大跃进案例）</h2>
             <div class="case-buttons">
                 <button class="case-btn active" data-case="newenergy">光伏&新能源汽车</button>
                 <button class="case-btn" data-case="seed">揠苗助长</button>
                 <button class="case-btn" data-case="flood">大禹治水</button>
+                <button class="case-btn" data-case="greenhouse">温室大棚</button>
+                <button class="case-btn" data-case="greatleap">大跃进（反面）</button>
             </div>
             <div class="case-content" id="caseBox">
                 <h3>案例：我国光伏、新能源汽车产业</h3>
@@ -241,9 +512,9 @@
             </div>
         </div>
 
-        <div class="section">
-            <h2>模拟实验：拖动滑块，观察实践结果</h2>
-            <p>调整两个维度，看看实践的最终效果，直观感受二者缺一不可</p>
+        <div class="section" id="sim">
+            <h2>四、模拟实验：拖动滑块，观察实践结果</h2>
+            <p>调整两个维度，直观感受二者缺一不可</p>
             <div class="slider-wrap">
                 <div class="slider-item">
                     <label>主观能动性（努力、科研、实践强度）：<span id="effVal">50</span>%</label>
@@ -259,12 +530,12 @@
             </div>
         </div>
 
-        <div class="section">
-            <h2>两大常见误区辨析</h2>
+        <div class="section" id="error">
+            <h2>五、两大常见误区辨析</h2>
             <div class="misconception">
                 <div class="mis-card">
                     <h3>唯意志论（夸大主观能动性）</h3>
-                    <p>例子：揠苗助长；过去违背自然规律围湖造田。以为只要人肯干，就能改变一切客观法则。<br>错误根源：无视客观条件与规律。</p>
+                    <p>例子：揠苗助长；大跃进“人有多大胆，地有多大产”；违背自然规律围湖造田。以为只要人肯干，就能改变一切客观法则。<br>错误根源：无视客观条件与规律。</p>
                 </div>
                 <div class="mis-card">
                     <h3>宿命论（否定主观能动性）</h3>
@@ -274,16 +545,19 @@
             <button class="btn" id="openMind">打开辩证关系思维导图</button>
         </div>
 
-        <div class="section">
-            <h2>课后自测简答题</h2>
+        <div class="section" id="test">
+            <h2>六、课后自测简答题（考试练习）</h2>
             <p>1. 为什么我国发展光伏产业不能脱离材料科学的客观规律？</p>
             <textarea id="q1"></textarea>
             <p>2. 既然规律是客观的，为什么我们还要投入大量人力去研发新能源？</p>
             <textarea id="q2"></textarea>
+            <p>3. 温室大棚没有改变植物生长规律，那它改变了什么？</p>
+            <textarea id="q3"></textarea>
             <button class="btn" id="showAnswer">查看参考作答</button>
             <div class="answer-text" id="selfAns">
                 <p>1. 材料、能量转化规律是客观存在，无法人为取消。无视规律去研发只会浪费资源，所有技术突破都必须建立在物理化学规律之上。</p>
                 <p>2. 规律本身不会自动变成技术产品。虽然规律不变，但只有发挥主观能动性，主动实验探索，才能认识规律、利用规律，开发光伏、新能源车，实现产业发展。</p>
+                <p>3. 没有改变植物生长规律，而是改变外部环境条件（温度湿度光照），利用植物生长规律，实现反季节种植。</p>
             </div>
         </div>
     </div>
@@ -297,20 +571,23 @@
 客观规律 ←→ 主观能动性 【辩证统一】
 ├─客观规律：不以人的意志转移，不能创造消灭
 │  └→ 约束：主观能动性必须以此为前提
+│  └特性：客观性，普遍性，条件性
 ├─主观能动性：认识、思考、实践改造世界
 │  └→ 作用：只有主动探索，才能发现、利用规律
+├─统一基础：实践
 ├─错误观点
 │  ├─唯意志论：重能动性，无视规律（蛮干）
 │  └─宿命论：只看规律，否定人的实践（躺平）
 └─实例
-   ├─成功案例：新能源产业、大禹治水
-   └─失败案例：揠苗助长、盲目围湖造田
+   ├─成功案例：新能源产业、大禹治水、温室大棚
+   └─失败案例：揠苗助长、大跃进、盲目围湖造田
             </pre>
         </div>
     </div>
+    <button class="back-top" id="backTop">↑</button>
 
 <script>
-    // 案例数据
+    // 案例数据，新增2组案例
     const caseData = {
         newenergy:{
             title:"案例：光伏&新能源汽车产业",
@@ -341,12 +618,36 @@
             content:`<h3>案例：大禹治水</h3>
             <p>客观规律：水的客观运动规律——水往低处流。鲧用堵的方式，对抗水流规律，治水失败。</p>
             <p>主观能动性：大禹主动观察水文，总结经验，改变思路，疏导河道，利用水向下流动的规律治理洪水。</p>
-            <p>辩证关系：没有改变水流动的客观规律；但是发挥主观能动性，认识规律、顺应规律，改造河道，变水患为水利。</p>`,
+            <p>辩证关系：没有改变水流动的客观规律；但是发挥主观能动性，认识并顺应规律，改造河道，变水患为水利。</p>`,
             quiz:"思考选择题：大禹治水成功，是因为他改变了水往低处流的规律吗？",
             optA:"A.是，大禹改造了水流的客观规律",
             optB:"B.不是，他认识并利用水流规律疏导洪水",
             optC:"C.洪水的发生完全由命运决定",
             ans:"答案B。规律不能被改变。大禹发挥能动性认识、利用规律。A错误，人不能改造客观规律；C属于宿命论。"
+        },
+        greenhouse:{
+            title:"案例：温室大棚",
+            content:`<h3>案例：温室大棚</h3>
+            <p>客观规律：植物光合作用、生长发育的生物规律，这个规律本身不会改变。</p>
+            <p>主观能动性：人类搭建大棚，人工调控温度、湿度、光照，改变外部环境条件。</p>
+            <p>辩证关系：我们<strong>没有创造、修改植物生长规律</strong>，而是改变外部条件，利用生物生长规律，实现反季节蔬菜种植。这是利用规律的典型例子。</p>`,
+            quiz:"思考选择题：温室大棚改变了植物生长本身的客观规律吗？",
+            optA:"A.改变了生长规律",
+            optB:"B.没有改变规律，只是改变外部环境条件",
+            optC:"C.植物生长没有客观规律",
+            ans:"答案B。规律本身不变，人类改变外部条件，利用规律，这是考试高频考点。"
+        },
+        greatleap:{
+            title:"案例：大跃进（唯意志论反面典型）",
+            content:`<h3>案例：大跃进 反面案例</h3>
+            <p>客观规律：农作物产量受土壤、光照、水分、生物生长上限约束，存在客观极限。</p>
+            <p>主观能动性：片面夸大人的意志，提出“人有多大胆，地有多大产”，忽视农业客观规律，盲目深耕密植。</p>
+            <p>辩证关系：只强调人的主观热情，无视客观规律。主观能动性越强，带来的损失越大。典型<strong>唯意志论</strong>错误。</p>`,
+            quiz:"思考选择题：“人有多大胆，地有多大产”错在哪里？",
+            optA:"A.人的胆子不够大",
+            optB:"B.片面夸大主观能动性，无视农业生产客观规律",
+            optC:"C.土地没有发挥作用",
+            ans:"答案B。典型唯意志论，否定客观规律对实践的制约作用。"
         }
     }
 
@@ -392,21 +693,20 @@
         let l = Number(lawSlider.value);
         effVal.innerText = e;
         lawVal.innerText = l;
-        // 综合得分 = 两者相乘/100
         let score = e * l / 100;
         let text,cls;
         if(score <30){
-            text = `综合实践得分：${score.toFixed(1)}｜❌ 失败。要么不尊重规律，要么完全不付出努力`;
+            text = `<span class="icon-anim">❌</span> 综合实践得分：${score.toFixed(1)}｜失败。要么不尊重规律，要么完全不付出努力`;
             cls = "bad";
         }else if(score<70){
-            text = `综合实践得分：${score.toFixed(1)}｜⚠️ 一般。二者匹配度不足，实践效果有限`;
+            text = `<span class="icon-anim">⚠️</span> 综合实践得分：${score.toFixed(1)}｜一般。二者匹配度不足，实践效果有限`;
             cls = "normal";
         }else{
-            text = `综合实践得分：${score.toFixed(1)}｜✅ 成功。尊重客观规律，同时充分发挥主观能动性`;
+            text = `<span class="icon-anim">✅</span> 综合实践得分：${score.toFixed(1)}｜成功。尊重客观规律，同时充分发挥主观能动性`;
             cls = "good";
         }
         resultBox.className = "result-box "+cls;
-        resultBox.innerText = text;
+        resultBox.innerHTML = text;
     }
     effSlider.oninput = calcResult;
     lawSlider.oninput = calcResult;
@@ -416,7 +716,6 @@
     const mindModal = document.getElementById("mindModal");
     document.getElementById("openMind").onclick = ()=>mindModal.style.display="flex";
     document.querySelector(".close-modal").onclick = ()=>mindModal.style.display="none";
-    // 点击弹窗背景关闭
     mindModal.onclick = function(e){
         if(e.target === mindModal) mindModal.style.display="none";
     }
@@ -425,6 +724,33 @@
     document.getElementById("showAnswer").onclick = function(){
         const selfAns = document.getElementById("selfAns");
         selfAns.classList.add("show");
+    }
+    // 返回顶部
+    const backTopBtn = document.getElementById("backTop");
+    window.addEventListener("scroll",()=>{
+        if(window.scrollY>300){
+            backTopBtn.classList.add("show");
+        }else{
+            backTopBtn.classList.remove("show");
+        }
+        //导航高亮
+        const sections = document.querySelectorAll(".section");
+        let currentId="";
+        sections.forEach(sec=>{
+            const top = sec.offsetTop -120;
+            if(window.scrollY >= top) currentId = sec.getAttribute("id");
+        })
+        document.querySelectorAll(".nav-item").forEach(nav=>{
+            nav.classList.remove("active");
+            if(nav.getAttribute("href") === "#"+currentId) nav.classList.add("active");
+        })
+    })
+    backTopBtn.onclick = ()=>window.scrollTo({top:0,behavior:"smooth"});
+    // 页面加载完成，关闭加载动画
+    window.onload = function(){
+        setTimeout(()=>{
+            document.getElementById("loader").classList.add("hide");
+        },600)
     }
 </script>
 </body>
